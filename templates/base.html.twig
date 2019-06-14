@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>SymfonyBNB - {% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous">
         {% block stylesheets %}{% endblock %}
     </head>
@@ -18,6 +19,9 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('homepage') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('ads_index') }}" class="nav-link">Annonces</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">

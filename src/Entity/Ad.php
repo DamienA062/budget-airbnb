@@ -124,6 +124,11 @@ class Ad
         return $this;
     }
 
+    public function formatPrice()
+    {
+        return number_format($this->price, 0, '', ' ').' €';
+    }
+
     public function getIntroduction(): ?string
     {
         return $this->introduction;
