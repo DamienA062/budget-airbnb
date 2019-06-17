@@ -16,3 +16,42 @@ div.ad-test h1, div.ad-test p{
 div.carousel-caption{
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
+
+.img-main{
+    background-image: url(/img-template/main.jpg);
+    width: 100%;
+    height: 377px;
+    background-size: cover;
+    background-position: center -71px;
+    margin-top: 30px;
+}
+
+.inner-img-main{
+    color: white;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    padding: 33px;
+}
+
+.inner-link-main{
+    color: white;
+}
+
+.inner-link-main:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.img-show{
+    width: 100%;
+    height: 377px;
+    background-size: cover;
+    background-position: center center;
+    margin-top: 30px;
+}
+
+.thumbnail-property{
+    width: 348px;
+    height: 330px;
+    background-size: cover;
+    background-position: center center;
+}

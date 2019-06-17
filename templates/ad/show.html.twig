@@ -4,20 +4,14 @@
 
 {% block body %}
 
-    <div class="ad-test" style="background-image: url('https://via.placeholder.com/1000x400');">
-        <div class="container">
-            <h1>{{ ad.title }}</h1>
-            <p>{{ ad.introduction }}</p>
-            <p class="h2">
-                <strong>{{ ad.rooms }} chambres</strong> pour <strong>{{ ad.formatPrice }}</strong>par nuit
-            </p>
-            <a href="#" class="btn btn-primary">Réserver</a>
-        </div>
-    </div>
-
     <div class="container">
         <div class="row">
             <div class="col-md-8 mb-3">
+                <div class="jumbotron p-3">
+                    <h1>{{ ad.title | upper }}</h1>
+                    > {{ ad.rooms }} chambres pour <strong>{{ ad.formatPrice }}</strong> par nuit <br>
+                    <a href="#" class="btn btn-primary mt-5">Réserver</a>
+                </div>
                 {{ ad.content | raw }}
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">

@@ -7,22 +7,22 @@
     <h1 class="my-3">Liste des annonces</h1>
     <div class="row">
         {% for ad in ads %}
-        {% set url = path('ads_show', {'slug': ad.slug}) %}
+        {% set url = path('ads_show', {'slug': ad.slug, 'id': ad.id}) %}
             <div class="col-md-4">
-                <div class="card ng-light mb-3">
+                <div class="card ng-light mb-3" style="min-height: 589px; max-height: 589px;">
                     <div class="card-header text-center">
                         {{ ad.rooms }} chambres, <strong>{{ ad.formatPrice }} la nuit</strong><br>
                         <small>Pas encore noté</small>
                     </div>
-                    <a href="{{ url }}">
-                        <img src="https://via.placeholder.com/1000x400" alt="Image de l'appartement" style="height: 200px; width:100%; display: block;">
-                    </a>
+                    <div class="thumbnail-property" style="background-image: url('{{ vich_uploader_asset(ad, 'imageFile') }}');">
 
-                    <div class="card-body">
+                    </div>
+                    <hr>
+                    <div class="card-body" style="text-overflow: ellipsis;">
                         <a href="{{ url }}">
                             <h4 class="card-title">{{ ad.title }}</h4>
                         </a>
-                        <p class="card-text">{{ ad.introduction }}</p>
+                        <p>{{ ad.content | ellipsis(30) | raw }}</p>
                         <a href="{{ url }}" class="btn btn-secondary">En savoir plus</a>
                     </div>
                 </div>

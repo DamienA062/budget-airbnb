@@ -3,14 +3,20 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 //HasLifecycleCallbacks prévient à doctrine qu'il y a des fonctions liées au cycle de vie
+//Vich\Uploadable indique que l'entité contient des fichier uploadable
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
  * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  */
 class Ad
 {
@@ -23,36 +29,44 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=3, max=255)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $slug;
-
-    /**
      * @ORM\Column(type="float")
+     * @Assert\Range(min=30, max=1000)
      */
     private $price;
 
     /**
      * @ORM\Column(type="text")
-     */
-    private $introduction;
-
-    /**
-     * @ORM\Column(type="text")
+     * @Assert\Length(min=10, max=255)
      */
     private $content;
 
+    /** 
+     * @ORM\Column(type="datetime")
+     * 
+     * @var \DateTime|null
+     */
+    private $updatedAt;
+
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=255)
      */
     private $coverImage;
 
+    /** 
+     * @var File
+     * @Vich\UploadableField(mapping="property_image", fileNameProperty="coverImage")
+     */
+    private $imageFile;
+
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=1, max=10)
      */
     private $rooms;
 
@@ -64,23 +78,7 @@ class Ad
     public function __construct()
     {
         $this->images = new ArrayCollection();
-    }
-
-    /**
-     * Permet d'initialiser le slug
-     * Elle est appelée avant de créer et de mettre à jour notre entité
-     * 
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     * @return void
-     */
-    public function initializeSlug()
-    {
-        if(empty($this->slug))
-        {
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->title);
-        }
+        $this->coverImage = "";
     }
 
     public function getId(): ?int
@@ -100,16 +98,14 @@ class Ad
         return $this;
     }
 
+    /**
+     * Permet la génération du slug
+     *
+     * @return string|null
+     */
     public function getSlug(): ?string
     {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
+        return (new Slugify())->slugify($this->title);
     }
 
     public function getPrice(): ?float
@@ -129,18 +125,6 @@ class Ad
         return number_format($this->price, 0, '', ' ').' €';
     }
 
-    public function getIntroduction(): ?string
-    {
-        return $this->introduction;
-    }
-
-    public function setIntroduction(string $introduction): self
-    {
-        $this->introduction = $introduction;
-
-        return $this;
-    }
-
     public function getContent(): ?string
     {
         return $this->content;
@@ -153,11 +137,19 @@ class Ad
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCoverImage(): ?string
     {
         return $this->coverImage;
     }
 
+    /**
+     * @param string|null $coverImage
+     * 
+     * @return self
+     */
     public function setCoverImage(string $coverImage): self
     {
         $this->coverImage = $coverImage;
@@ -206,5 +198,33 @@ class Ad
         }
 
         return $this;
+    }
+
+    /**
+     * Get the value of imageFile
+     *
+     * @return  File|null
+     */ 
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set the value of imageFile
+     *
+     * @param  File|null  $imageFile
+     *
+     * @return  self
+     */ 
+    public function setImageFile($imageFile)
+    {
+        $this->imageFile = $imageFile;
+
+        // Only change the updated af if the file is really uploaded to avoid database updates.
+        // This is needed when the file should be set when loading the entity.
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 }
