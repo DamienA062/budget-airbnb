@@ -1,0 +1,28 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.title) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.price) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.rooms) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.imageFile) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_row(form.content) }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        {{ button|default('Créer l\'annonce') }}
+    </button>
+{{ form_end(form) }}

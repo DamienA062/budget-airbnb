@@ -19,6 +19,19 @@ class AdRepository extends ServiceEntityRepository
         parent::__construct($registry, Ad::class);
     }
 
+    /**
+     * Permet de trier un table par ordre décroissant d'id
+     *
+     * @return Ad[]
+     */
+    public function orderByDesc()
+    {
+        return $this->createQueryBuilder('p')
+                    ->orderBy('p.id', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
     // /**
     //  * @return Ad[] Returns an array of Ad objects
     //  */

@@ -8,7 +8,8 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail:
-                    size: [348, 335]
+                    size: [348, 330]
+                    position: center
                     mode: outbound
         
         medium:

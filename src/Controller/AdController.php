@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Form\AdType;
+use App\Entity\Image;
 use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -13,12 +14,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
 {
+    /** 
+     * @var AdRepository
+     */
+    private $repository;
+
+    /** 
+     * @var ObjectManager
+     */
+    private $manager;
+
+    public function __construct(ObjectManager $manager, AdRepository $repo)
+    {
+        $this->repository = $repo;
+        $this->manager = $manager;
+    }
+
     /**
      * @Route("/ads", name="ads_index")
      */
-    public function index(AdRepository $repo)
+    public function index()
     {
-        $ads = $repo->findAll();
+        $ads = $this->repository->orderByDesc();
 
         return $this->render('ad/index.html.twig', [
             'ads' => $ads
@@ -32,7 +49,7 @@ class AdController extends AbstractController
      *
      * @return Response
      */
-    public function create(Request $request, ObjectManager $manager)
+    public function create(Request $request)
     {
         $ad = new Ad();
 
@@ -42,8 +59,15 @@ class AdController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $manager->persist($ad);
-            $manager->flush();
+            /*foreach($ad->getImages() as $image)
+            {
+                $image->setAd($ad);
+
+                $this->manager->persist($image); 
+            }*/
+
+            $this->manager->persist($ad);
+            $this->manager->flush();
 
             $this->addFlash('success', 'Votre annonce a bien été ajoutée');
 
@@ -52,9 +76,43 @@ class AdController extends AbstractController
                 'id' => $ad->getId()
             ]);
         }
-        
         return $this->render('ad/new.html.twig',[
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Affiche le formulaire d'édition
+     * 
+     * @Route("/ads/{slug}/{id}/edit", name="ads_edit")
+     *
+     * @return Response
+     */
+    public function edit(Ad $ad, Request $request)
+    {
+        $form = $this->createForm(AdType::class, $ad);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            /*foreach($ad->getImages() as $image)
+            {
+                $image->setAd($ad);
+
+                $this->manager->persist($image); 
+            }*/
+            $this->addFlash('success', 'Votre annonce a bien été mise à jour');
+
+            return $this->redirectToRoute('ads_show', [
+                'slug' => $ad->getSlug(),
+                'id' => $ad->getId()
+            ]);
+        }
+
+        return $this->render('ad/edit.html.twig', [
+            'form' => $form->createView(),
+            'ad' => $ad
         ]);
     }
 
@@ -74,5 +132,4 @@ class AdController extends AbstractController
             'id' => $ad->getId()
         ]);
     }
-
 }

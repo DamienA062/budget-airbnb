@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 //HasLifecycleCallbacks prévient à doctrine qu'il y a des fonctions liées au cycle de vie
 //Vich\Uploadable indique que l'entité contient des fichier uploadable
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
  * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
+ * @UniqueEntity("title", message="Titre déjà utilisé")
  */
 class Ad
 {
@@ -29,7 +31,7 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=3, max=255)
+     * @Assert\Length(min=8, max=30)
      */
     private $title;
 
@@ -60,7 +62,8 @@ class Ad
 
     /** 
      * @var File
-     * @Vich\UploadableField(mapping="property_image", fileNameProperty="coverImage")
+     * @Assert\Image(mimeTypes="image/jpeg", mimeTypesMessage="Format d'image ivalide, seul le jpg est accepté !")
+     * @Vich\UploadableField(mapping="ad_image", fileNameProperty="coverImage")
      */
     private $imageFile;
 

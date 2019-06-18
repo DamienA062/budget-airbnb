@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,13 @@ class Image
      * @ORM\Column(type="string", length=255)
      */
     private $caption;
+
+    /** 
+     * @var File|null
+     * @Assert\Image(mimeTypes="image/jpeg", mimeTypesMessage="Format d'image ivalide, seul le jpg est accepté !")
+     * @Vich\UploadableField(mapping="ad_image", fileNameProperty="url")
+     */
+    private $imageFile;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ad", inversedBy="images")
@@ -69,6 +78,30 @@ class Image
     public function setAd(?Ad $ad): self
     {
         $this->ad = $ad;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imageFile
+     *
+     * @return  File
+     */ 
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set the value of imageFile
+     *
+     * @param  File  $imageFile
+     *
+     * @return  self
+     */ 
+    public function setImageFile(File $imageFile)
+    {
+        $this->imageFile = $imageFile;
 
         return $this;
     }

@@ -22,7 +22,7 @@
                     <div class="carousel-inner">
                         {% for image in ad.images %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="https://via.placeholder.com/1000x600" class="d-block w-100" alt="...">
+                                <img src="{{ vich_uploader_asset(ad, 'imageFile') | imagine_filter('medium')}}" class="d-block w-100" alt="...">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5>{{ ad.title }}</h5>
                                     <p>{{ image.caption }}</p>
