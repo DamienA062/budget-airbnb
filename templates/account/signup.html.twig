@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-8">
+                    <h1 class="text-center mb-4">Créez votre compte</h1>
+                    <div class="bg-light py-3 px-3">
+                        <div class="id-container">
+                            <h2 class="text-center">Identifiants</h2>
+                            <p class="text-center"><em><span style="color:#4582EC">*</span> Champs obligatoires</em></p>
+                            <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ form_errors(form.email) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-5 reg-label">Adresse Email<span style="color:#4582EC">&nbsp;*</span></div>
+                                <div class="col-md-5">{{ form_widget(form.email) }}</div>
+                                
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ form_errors(form.hash) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-5 reg-label">Mot de passe<span style="color:#4582EC">&nbsp;*</span></div>
+                                <div class="col-md-5">{{ form_widget(form.hash) }}</div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ form_errors(form.passwordConfirm) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 reg-label">Confirmation du mot de passe<span style="color:#4582EC">&nbsp;*</span></div>
+                                <div class="col-md-5">{{ form_widget(form.passwordConfirm) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-8">
+                    <div class="bg-light py-3 px-3">
+                        <div class="id-container">
+                            <h2 class="text-center mb-4">Informations personnelles</h2>
+                            <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ form_errors(form.firstName) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-5 reg-label">Prénom<span style="color:#4582EC">&nbsp;*</span></div>
+                                <div class="col-md-5">{{ form_widget(form.firstName) }}</div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ form_errors(form.lastName) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-5 reg-label">Nom<span style="color:#4582EC">&nbsp;*</span></div>
+                                <div class="col-md-5">{{ form_widget(form.lastName) }}</div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ form_errors(form.profilPicture) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 reg-label">Photo de profil</div>
+                                <div class="col-md-5">{{ form_widget(form.profilPicture) }}</div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2">&nbsp;</div>
+                <div class="col-md-8">
+                    <div class="bg-light py-3 px-3">
+                        <div class="id-container">
+                            <h2 class="text-center mb-4">Détails</h2>
+                            <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ form_errors(form.introduction) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-5 reg-label">Introduction<span style="color:#4582EC">&nbsp;*</span></div>
+                                <div class="col-md-5">{{ form_widget(form.introduction) }}</div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ form_errors(form.description) }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-5 reg-label">Description<span style="color:#4582EC">&nbsp;*</span></div>
+                                <div class="col-md-5">{{ form_widget(form.description) }}</div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary">Valider</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

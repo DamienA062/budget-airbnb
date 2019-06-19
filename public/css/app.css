@@ -63,3 +63,13 @@ div.carousel-caption{
     top: 0;
     bottom: 0;
 }
+
+.reg-label{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.reg-label>label{
+    margin-bottom: 0 !important;
+}

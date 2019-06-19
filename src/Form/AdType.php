@@ -14,19 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class AdType extends AbstractType
+class AdType extends ApplicationType
 {
-    /**
-     * DRY function pour avoir le placeholder d'un champs
-     *
-     * @param string $placeholder
-     * @return Array
-     */
-    private function getConfiguration($placeholder)
-    {
-        return ['attr' => ['placeholder' => $placeholder]];
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

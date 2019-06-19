@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Controller\ContructAW\ContructAWController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -29,7 +30,7 @@ class AdController extends AbstractController
         $this->repository = $repo;
         $this->manager = $manager;
     }
-
+    
     /**
      * @Route("/ads", name="ads_index")
      */
