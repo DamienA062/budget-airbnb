@@ -73,3 +73,15 @@ div.carousel-caption{
 .reg-label>label{
     margin-bottom: 0 !important;
 }
+
+/*.fa-sign-in:before {
+    content: "\f090";
+}*/
+
+.read-only{
+    cursor: not-allowed;
+}
+
+.t-a-upload{
+    height: 243px !important;
+}
