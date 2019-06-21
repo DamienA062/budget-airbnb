@@ -3,7 +3,6 @@
 {% block title %}{{ ad.title }}{% endblock %}
 
 {% block body %}
-
     <div class="container">
         <div class="row">
             <div class="col-md-8 mb-3">
@@ -40,20 +39,24 @@
                     </a>
                 </div>
             </div>
-            
+            {% set a = ad.author %}
             <div class="col">
                 <div class="row">
-                    <div class="col-4">
-                        <img src="https://via.placeholder.com/64x64" alt="Avatar">
+                    <div class="col-3">
+                        <img src="{{ vich_uploader_asset(a, 'imageFile') | imagine_filter('avatar') }}" alt="Avatar de {{ a.getFullName }}" class="avatar-medium">
                     </div>
                     <div class="col">
-                        <h3>Damien Damien</h3>
-                        <span class="badge badge-primary">3 annonces</span>
+                        <h3><a href="{{ path('user_show', {'id': a.id }) }}">{{ a.getFullName }}</a></h3>
+                        <span class="badge badge-primary">
+                            {% if a.ads | length > 1 %}
+                                {{ a.ads | length }} annonces
+                            {% else %}
+                                {{ a.ads | length }} annonce
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam doloremque suscipit laborum possimus officia id aspernatur consectetur corrupti minima aliquid.</p>
-                <p>Perspiciatis totam velit alias minima! Qui, dolorum consequuntur quaerat, animi dignissimos veniam magnam in dolorem accusamus quo cum voluptate obcaecati.</p>
-                <p>Ullam recusandae labore voluptates id ex quasi inventore porro eligendi nulla nesciunt accusamus, placeat molestiae! Impedit iusto ipsa amet velit.</p>
+                <br><p>{{ a.description | nl2br | raw }}</p>
             </div>
         </div>
     </div>

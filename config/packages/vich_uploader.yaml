@@ -7,6 +7,11 @@ vich_uploader:
             upload_destination: '%kernel.project_dir%/public/images/ads'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
 
+        profilPicture_image:
+            uri_prefix: /images/profil_pictures
+            upload_destination: '%kernel.project_dir%/public/images/profil_pictures'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
     #mappings:
     #    products:
     #        uri_prefix: /images/products

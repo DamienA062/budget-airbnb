@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Entity\User;
 use App\Form\AdType;
 use App\Entity\Image;
 use App\Repository\AdRepository;
@@ -13,6 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\ContructAW\ContructAWController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Controller qui gère tout ce qui touche aux annonces
+ * ->affichage, édition, création, suppression
+ * 
+ * @Route("/ads")
+ */
 class AdController extends AbstractController
 {
     /** 
@@ -32,7 +39,11 @@ class AdController extends AbstractController
     }
     
     /**
-     * @Route("/ads", name="ads_index")
+     * Affiche toutes les annonces
+     * 
+     * @Route("/", name="ads_index")
+     * 
+     * @return Response
      */
     public function index()
     {
@@ -46,7 +57,7 @@ class AdController extends AbstractController
     /**
      * Crée une annonce via formulaire et la save dans la DB
      * 
-     * @Route("/ads/new", name="ads_create")
+     * @Route("/new", name="ads_create")
      *
      * @return Response
      */
@@ -54,7 +65,10 @@ class AdController extends AbstractController
     {
         $ad = new Ad();
 
+        $author = $this->getUser();
+        
         $form = $this->createForm(AdType::class, $ad);
+        $ad->setAuthor($author);
 
         $form->handleRequest($request);
 
@@ -66,6 +80,7 @@ class AdController extends AbstractController
 
                 $this->manager->persist($image); 
             }*/
+            
 
             $this->manager->persist($ad);
             $this->manager->flush();
@@ -85,7 +100,7 @@ class AdController extends AbstractController
     /**
      * Affiche le formulaire d'édition
      * 
-     * @Route("/ads/{slug}/{id}/edit", name="ads_edit")
+     * @Route("/{slug}/{id}/edit", name="ads_edit")
      *
      * @return Response
      */
@@ -121,7 +136,7 @@ class AdController extends AbstractController
      * Affiche une annonce en utilisant le param converter
      * Symfony va faire automatiquement le lien entre le slug et l'annonce
      *
-     * @Route("/ads/{slug}/{id}", name="ads_show")
+     * @Route("/{slug}/{id}", name="ads_show")
      * 
      * @return Response
      */

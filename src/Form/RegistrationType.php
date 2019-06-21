@@ -21,7 +21,7 @@ class RegistrationType extends ApplicationType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('email', EmailType::class)
-            ->add('profilPicture', FileType::class, [
+            ->add('imageFile', FileType::class, [
                 'required' => false,
                 'attr' => [
                     'placeholder' => "Avatar (optionnel)"
@@ -31,7 +31,11 @@ class RegistrationType extends ApplicationType
             ->add('hash', PasswordType::class)
             ->add('passwordConfirm', PasswordType::class)
             ->add('introduction', TextType::class, $this->getConfiguration('Vous en quelques mots ...'))
-            ->add('description', TextareaType::class, $this->getConfiguration('Description complète ...'))
+            ->add('description', TextareaType::class, [
+                'attr' => [
+                    'class' => 't-a-upload'
+                ]
+            ])
         ;
     }
 

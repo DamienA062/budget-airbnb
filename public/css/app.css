@@ -85,3 +85,28 @@ div.carousel-caption{
 .t-a-upload{
     height: 243px !important;
 }
+
+.avatar-medium{
+    border-radius: 50%;
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.avatar{
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 50%;
+}
+
+.quote-color{
+    color: #d4d4d4;
+}
+
+.sep{
+    border-bottom: 4px solid #d4d4d4 !important;
+    width: 32px !important;
+}
+
+.fa-edit:before, .fa-pencil-square-o:before {
+    content: "\f044";
+}

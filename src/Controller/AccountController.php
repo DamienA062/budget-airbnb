@@ -12,11 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Controller qui gère tout ce qui touche aux comptes des utilisateurs 
+ * ->login, inscription, édition du profil, édition du mot de passe
+ */
 class AccountController extends AbstractController
 {
     /** 
@@ -82,7 +85,7 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account_login');
         }
 
-        return $this->render('account/signup.html.twig', [
+        return $this->render('account/register.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -157,6 +160,20 @@ class AccountController extends AbstractController
         }
         return $this->render('account/password.html.twig', [
             'pwdForm' => $pwdForm->createView()
+        ]);
+    }
+    
+    /**
+     * Affiche notre propre profil
+     * 
+     * @Route("/account", name="account_index")
+     *
+     * @return Response
+     */
+    public function showOwnProfil()
+    {
+        return $this->render('user/index.html.twig', [
+            'user' => $this->getUser() //récupère la session en cours
         ]);
     }
 }

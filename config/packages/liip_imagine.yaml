@@ -4,6 +4,13 @@ liip_imagine:
     driver: "gd"
 
     filter_sets:
+        avatar:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [128, 128]
+                    mode: outbound
+
         thumb:
             quality: 75
             filters:
@@ -17,4 +24,11 @@ liip_imagine:
             filters:
                 thumbnail:
                     size: [800, 530]
+                    mode: outbound
+
+        home_avatar:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [24, 24]
                     mode: outbound

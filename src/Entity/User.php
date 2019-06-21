@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -47,6 +49,13 @@ class User implements UserInterface
      */
     private $profilPicture;
 
+    /** 
+     * @var File
+     * @Assert\Image(mimeTypes="image/jpeg", mimeTypesMessage="Format d'image ivalide, seul le jpg est accepté !")
+     * @Vich\UploadableField(mapping="profilPicture_image", fileNameProperty="profilPicture")
+     */
+    private $imageFile;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -72,9 +81,34 @@ class User implements UserInterface
      */
     private $ads;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * Retourne le non complet d'un user
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return "$this->firstName $this->lastName";
+    }
+
     public function __construct()
     {
         $this->ads = new ArrayCollection();
+    }
+
+    /**
+     * Permet la génération du slug
+     *
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return (new Slugify())->slugify($this->firstName.' '.$this->lastName);
     }
 
     public function getId(): ?int
@@ -232,6 +266,46 @@ class User implements UserInterface
     public function setPasswordConfirm($passwordConfirm)
     {
         $this->passwordConfirm = $passwordConfirm;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imageFile
+     *
+     * @return  File
+     */ 
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set the value of imageFile
+     *
+     * @param  File  $imageFile
+     *
+     * @return  self
+     */ 
+    public function setImageFile(File $imageFile)
+    {
+        $this->imageFile = $imageFile;
+
+        // Only change the updated af if the file is really uploaded to avoid database updates.
+        // This is needed when the file should be set when loading the entity.
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

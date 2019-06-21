@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ user.getFullName }}{% endblock %}
+
+
+{% block body %}
+    {% set logged = null %}
+    {% if user is same as (app.user) %}
+        {% set logged = true %}
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>                    
+                    {% if logged %}
+                        Mon espace
+                        <a href="{{ path('account_profile') }}" style="font-size: 30px;"><i class="fa fa-pencil-square-o fa-2" aria-hidden="true"></i></a>
+                    {% else %}
+                        Profil de {{ user.getFullName }}
+                    {% endif %}
+                </h1>
+                <img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('avatar') }}" alt="Avatar de {{ user.getFullName }}" class="avatar">
+                <br>
+                <span class="badge badge-primary mt-3">
+                    {% if user.ads | length > 1 %}
+                        {{ user.ads | length }} annonces
+                    {% else %}
+                        {{ user.ads | length }} annonce
+                    {% endif %}
+                </span>
+            </div>
+        </div>         
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h4>Présentation</h4>
+                <p>
+                    <i class="fa fa-quote-left quote-color" aria-hidden="true"></i><br>
+                    <div class="col-md-3"></div>
+                    <div class="col">{{ user.description | capitalize }}</div>
+                    
+                </p>
+            </div>
+        </div>
+        <div class="sep mb-3 mt-3"></div>
+
+        {% if user.ads | length > 0 %}
+            <h4 class="mb-3"><i class="fa fa-caret-right" aria-hidden="true"></i> Annonces de {{ user.getFullName }} ({{ user.ads | length }})</h4>
+            <div class="row">
+                {% for ad in user.ads %}
+                    {% include 'ad/_ad_listing.html.twig' %}
+                {% endfor %}  
+            </div>
+        {% else %}
+        <div class="alert alert-info">
+            <p>Cet utilisateur n'a posté aucune annonce.</p> 
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
