@@ -87,6 +87,11 @@ class User implements UserInterface
     private $updatedAt;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
+     */
+    private $userRoles;
+
+    /**
      * Retourne le non complet d'un user
      *
      * @return string
@@ -99,6 +104,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->ads = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
 
     /**
@@ -231,9 +237,23 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * Fonction qui permet de savoir quels sont les rôles qui sont affectés aux utilisateurs qui s'exécute à la connexion
+     * Elle transforme le arrayCollection userRoles en un simple tableau qui renvoie juste les titres des roles
+     * Retourne une liste de roles qui est une chaine de caractères (un admin sera un admin + un user)
+     *
+     * @return array
+     */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        
+        $roles = $this->userRoles->map(function($role){
+            return $role->getTitle();
+        })->toArray();
+
+        $roles[] = 'ROLE_USER';
+
+        return $roles;
     }
 
     public function getPassword()
@@ -306,6 +326,34 @@ class User implements UserInterface
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        if ($this->userRoles->contains($userRole)) {
+            $this->userRoles->removeElement($userRole);
+            $userRole->removeUser($this);
+        }
 
         return $this;
     }

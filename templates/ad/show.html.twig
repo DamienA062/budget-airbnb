@@ -9,7 +9,18 @@
                 <div class="jumbotron p-3">
                     <h1>{{ ad.title | upper }}</h1>
                     > {{ ad.rooms }} chambres pour <strong>{{ ad.formatPrice }}</strong> par nuit <br>
-                    <a href="#" class="btn btn-primary mt-5">Réserver</a>
+                    <div class="mb-3"></div>
+                    {% if app.user and app.user != ad.author %} 
+                        <a href="#" class="btn btn-primary mt-5">Réserver</a>
+                    {% endif %}
+                    {% if app.user and app.user == ad.author %}                    
+                        <a href="{{ path('ads_edit', {'slug': ad.slug, 'id': ad.id}) }}" class="btn btn-primary">Modifier mon annonce</a>
+                        <form method="post" action="{{ path('ads_delete', {'slug': ad.slug, 'id': ad.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer cette annonce ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ad.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    {% endif %}
                 </div>
                 {{ ad.content | raw }}
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -56,7 +67,7 @@
                         </span>
                     </div>
                 </div>
-                <br><p>{{ a.description | nl2br | raw }}</p>
+                <br><p>{{ a.description | raw }}</p>
             </div>
         </div>
     </div>

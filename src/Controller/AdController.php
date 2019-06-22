@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Controller\ContructAW\ContructAWController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -58,6 +59,7 @@ class AdController extends AbstractController
      * Crée une annonce via formulaire et la save dans la DB
      * 
      * @Route("/new", name="ads_create")
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */
@@ -101,6 +103,7 @@ class AdController extends AbstractController
      * Affiche le formulaire d'édition
      * 
      * @Route("/{slug}/{id}/edit", name="ads_edit")
+     * @Security("is_granted('ROLE_USER) and user === ad.getAuthor()", message="Vous ne pouvez pas faire faire cela.")
      *
      * @return Response
      */
@@ -147,5 +150,28 @@ class AdController extends AbstractController
             'slug' => $ad->getSlug(),
             'id' => $ad->getId()
         ]);
+    }
+
+    /**
+     * Supprime un article
+     * 
+     * @Route("/{slug}/{id}/delete", name="ads_delete")
+     * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Vous ne pouvez pas faire cela.")
+     *
+     * @return Response
+     */
+    public function delete(Ad $ad, Request $request)
+    {
+        dump($ad);
+        //On vérifie si le token est valide pour pouvoir delete (id du token, token)
+        if($this->isCsrfTokenValid('delete'.$ad->getId(), $request->get('_token')))
+        {
+            $this->manager->remove($ad);
+            $this->manager->flush();
+
+            $this->addFlash('success', 'Votre annonce '.$ad->getTitle().' a bien été supprimée.');
+        }
+        
+        return $this->redirectToRoute("ads_index");
     }
 }

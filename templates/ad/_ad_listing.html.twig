@@ -19,6 +19,14 @@
             </a>
             <p>{{ ad.content | ellipsis(30) | capitalize | raw }}</p>
             <a href="{{ url }}" class="btn btn-secondary">En savoir plus</a>
+            {% if app.user and app.user == ad.author %}                    
+                <a href="{{ path('ads_edit', {'slug': ad.slug, 'id': ad.id}) }}" class="btn btn-primary">Modifier</a>
+                <form method="post" action="{{ path('ads_delete', {'slug': ad.slug, 'id': ad.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer cette annonce ?')">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ad.id) }}">
+                    <button class="btn btn-danger">X</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 </div>

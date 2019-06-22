@@ -1,3 +1,7 @@
+body{
+    font-family: 'Montserrat', sans-serif !important;
+}
+
 div.container{
     margin-top: 20px;
 }
@@ -109,4 +113,23 @@ div.carousel-caption{
 
 .fa-edit:before, .fa-pencil-square-o:before {
     content: "\f044";
+}
+
+.login-title{
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.login-title:after{
+    content: '';
+    position: absolute;
+    width: 107px;
+    height: 5px;
+    bottom: -14px;
+    left: 3px;
+    background-color: #cccccc;
+}
+
+.custom-file-label::after{
+    content:'Parcourir' !important;
 }
