@@ -32,3 +32,10 @@ liip_imagine:
                 thumbnail:
                     size: [24, 24]
                     mode: outbound
+
+        ad_booked_img:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [348, 200]
+                    mode: outbound

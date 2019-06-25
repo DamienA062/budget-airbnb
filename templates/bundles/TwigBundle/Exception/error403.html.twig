@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur{% endblock %}
+
+{% block body %}
+    <div class="container text-center cont-403-div">
+        <h3 class="mb-5">Une erreur s'est produite.</h3>
+        <div class="alert alert-danger div-403">
+            <p>Vous n'avez pas le droit d'accéder à cette ressource, bien tenté.</p>
+        </div>
+        <div class="mt-4">
+            <a href="{{ path("homepage") }}" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}

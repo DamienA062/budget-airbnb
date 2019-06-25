@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation n° {{ booking.id }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Votre réservation (n°{{ booking.id }})</h1>
+
+        {# 
+            app.request représente la requête http
+            on récupère ce qui est passé en get
+        #}
+        {% if app.request.query.get('withAlert') %}
+            <div class="alert alert-success">
+                <h4 class="alert-heading">Félicitations !</h4>
+                <p>
+                    Votre réservation auprès de
+                    <strong>
+                        <a href="{{ path('user_show', {'id': booking.ad.author.id }) }}">{{ booking.ad.author.getFullName }}</a>
+                    </strong>
+                    pour l'annonce
+                    <strong>
+                        <a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}">{{ booking.ad.title }}</a>
+                    </strong>
+                    a bien été prise en compte.
+                </p>
+            </div>
+        {% endif %}
+        
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-light">
+                    <h2>Détails</h2>
+                    <dl class="row">
+                        <dt class="col-md-4">Numéro</dt>
+                        <dd class="col-md-8">{{ booking.id }}</dd>
+                        <dt class="col-md-4">Date d'arrivée</dt>
+                        <dd class="col-md-8">{{ booking.startDate | date('d/m/Y') }}</dd>
+                        <dt class="col-md-4">Date de départ</dt>
+                        <dd class="col-md-8">{{ booking.endDate | date('d/m/Y') }}</dd>
+                        <dt class="col-md-4">Nombre de nuits</dt>
+                        <dd class="col-md-8">{{ booking.duration }}</dd>
+                        <dt class="col-md-4">Montant total</dt>
+                        <dd class="col-md-8">{{ booking.amount }} &euro;</dd>
+                        <dt class="col-md-4">Commentaire</dt>
+                        <dd class="col-md-8">{{ booking.comment }}</dd>
+                    </dl>
+                    <hr>
+                    <h2 class="alert-heading">Votre hôte</h2>
+
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            {#<img src="{{ vich_uploader_asset(booking.ad.author.profilPicture, 'imageFile') | imagine_filter('medium')}}" alt="Avatar de {{ booking.ad.author }}">#}
+                        </div>
+                        <div class="col-9">
+                            <h4>
+                                <a href="{{ path('user_show', {'id': booking.ad.author.id}) }}">{{ booking.ad.author.getFullName }}</a>
+                            </h4>
+                            <span class="badge badge-primary">{{ booking.ad.author.ads | length }} annonces</span>
+                        </div>
+                    </div>
+                    {{ booking.ad.author.description | raw }}
+                    <a href="{{ path('user_show', {'id': booking.ad.author.id}) }}" class="btn btn-primary">Plus d'infos sur {{ booking.ad.author.firstName }}</a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-light">
+                    <h2 class="alert-heading">Votre hébergement</h2>
+                    <h4>
+                        <a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}" style="text-decoration: none;" class="mb-2"><i class="fa fa-caret-right" aria-hidden="true"></i> {{ booking.ad.title | capitalize }}</a>
+                    </h4>
+                    <img src="{{ vich_uploader_asset(booking.ad, 'imageFile') | imagine_filter('ad_booked_img') }}" alt="Image de {{ booking.ad.title }}" class="img-fluid mb-3">
+
+                    <br>{{ booking.ad.content | raw }}
+
+                    <br><a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}" class="btn btn-primary mt-3">Plus d'informations</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

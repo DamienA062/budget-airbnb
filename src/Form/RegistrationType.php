@@ -24,7 +24,7 @@ class RegistrationType extends ApplicationType
             ->add('imageFile', FileType::class, [
                 'required' => false,
                 'attr' => [
-                    'placeholder' => "Avatar (optionnel)"
+                    'placeholder' => "(optionnel)"
                     ]
                 
                 ])
