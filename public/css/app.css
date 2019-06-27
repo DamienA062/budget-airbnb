@@ -191,3 +191,7 @@ div.carousel-caption{
 .bg-light{
     background-color: #f3f3f3 !important;
 }
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+    color: firebrick !important;
+}

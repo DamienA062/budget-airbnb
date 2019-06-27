@@ -180,4 +180,16 @@ class AccountController extends AbstractController
             'user' => $this->getUser() //récupère la session en cours
         ]);
     }
+
+    /**
+     * Affiche la liste des réservations de l'utilisateur
+     * 
+     * @Route("/account/bookings", name="account_bookings")
+     *
+     * @return Response
+     */
+    public function bookings()
+    {
+        return $this->render('account/bookings.html.twig');
+    }
 }
