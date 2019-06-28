@@ -1,0 +1,13 @@
+{# Boucle pour afficher la note en étoiles #}
+{% for i in 1..rating %}
+    <i class="fa fa-star comment-rating" aria-hidden="true"></i>
+{% endfor %}
+
+{% set emptyStars = 5 - rating %}
+
+{% for j in 1..emptyStars %}
+{% if emptyStars != 0 %}
+    <i class="fa fa-star-o comment-rating" aria-hidden="true"></i>
+{% else %}
+{% endif %}                                
+{% endfor %}

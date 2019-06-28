@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -89,13 +90,60 @@ class Ad
      */
     private $bookings;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="ad", orphanRemoval=true)
+     */
+    private $comments;
+
+    public $type;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->coverImage = "";
         $this->bookings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
     
+    /**
+     * Permet de récupérer le commentaire d'un auteur par rapport à une annonce
+     *
+     * @param User $author
+     * @return Comment|null
+     */
+    public function getCommentFromAuthor(User $author)
+    {
+        foreach($this->comments as $comment)
+        {
+            if($comment->getAuthor() === $author) return $comment;
+        }
+        return null;
+    }
+
+    /**
+     * Calcule la note moyenne d'une annonce en fonction des avis
+     *
+     * @return float|int
+     */
+    public function getAvgRatings()
+    {
+        $sum = 0;
+
+        foreach($this->comments as $comment)
+        {
+            $sum += $comment->getRating(); 
+        }
+        $avgRating = $sum / count($this->comments->toArray());
+
+        if(is_int($avgRating))
+        {
+            $this->type = 'int';
+        }else{
+            $this->type = 'float';
+        }
+        return $avgRating;
+    }
+
     /**
      * Permet d'obtenir un tableau des jours qui ne sont pas disponibles pour cette annonce
      * Le but est d'avoir les jours précis qui se trouve entre la range de la date de départ et d'arrivée
@@ -337,6 +385,37 @@ class Ad
             // set the owning side to null (unless already changed)
             if ($booking->getAd() === $this) {
                 $booking->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getAd() === $this) {
+                $comment->setAd(null);
             }
         }
 

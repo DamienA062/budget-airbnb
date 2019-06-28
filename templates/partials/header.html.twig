@@ -48,9 +48,9 @@
 
 {% for label, messages in app.flashes %}
     <div class="container">
-        <div class="alert alert-{{ label }}">
+        <div class="alert alert-{{ label }}" style="margin: 0 !important;">
             {% for message in messages %}
-                <p style="margin: 0 !important;"></p>{{ message | raw }}</p>
+                <p>{{ message | raw }}</p>
             {% endfor %}
         </div>
     </div>

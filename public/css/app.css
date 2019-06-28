@@ -127,7 +127,7 @@ div.carousel-caption{
     height: 5px;
     bottom: -14px;
     left: 3px;
-    background-color: #cccccc;
+    background-color: #4582ec;
 }
 
 .custom-file-label::after{
@@ -180,7 +180,7 @@ div.carousel-caption{
     height: 5px;
     bottom: -14px;
     left: 159px;
-    background-color: #cccccc;
+    background-color: #4582ec;
 }
 
 .OC_{
@@ -194,4 +194,42 @@ div.carousel-caption{
 
 .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
     color: firebrick !important;
+}
+
+.comment-rating{
+    color: #daa520;
+}
+
+.rating-ad-listing i:nth-child(n+8){
+    display: none !important;
+}
+
+.show-average-rating i:nth-child(n+6){
+    display: none;
+}
+
+.booker-name-comment{
+    position: relative;
+}
+
+.booker-name-comment:after{
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 4px;
+    background-color: #17a2b8;
+    bottom: -8px;
+    left: 1px;
+}
+
+.reservation-alert-p{
+    margin: 0;
+    font-weight: bold;
+}
+
+.price-bookings{
+    background-color: #4f6492;
+    color: white;
+    padding: 9px;
+    display: inline-block;
 }

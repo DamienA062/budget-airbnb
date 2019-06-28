@@ -7,20 +7,33 @@
 <div class="container">
     <h1>Mes réservations</h1>
     <div class="alert alert-info mt-5">
-        <p>Retrouvez ci-dessous toutes vos réservations</p>
+        <p class="reservation-alert-p"><i class="fa fa-caret-right" aria-hidden="true"></i> Retrouvez ci-dessous toutes vos réservations</p>
     </div>
     {% for booking in app.user.bookings %}
-        <div class="row">
+        <div class="row mt-5 mb-5">
             <div class="col-4">
                 <img src="" class="img-fluid" alt="Photo de l'annonce {{ booking.ad.title }}">
+                <div class="mt-3">
+                    {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                    {% if comment is not null %}
+                        <strong>Note donnée : </strong>{% include 'partials/rating.html.twig' with {'rating': comment.rating} %}
+                    {% else %}
+                        <em>Vous n'avez pas encore donné de note.</em><br> 
+                        <a href="{{ path('booking_show', {'id': booking.id}) }}#comment">> Je donne mon avis</a>
+                    {% endif %}
+                    
+                </div>
             </div>
             <div class="col-8">
                 <h4>{{ booking.ad.title }}</h4>
                 <p>
                     Réservation <strong>n°{{ booking.id }}</strong><br>
-                    Du {{ booking.startDate | date('d/m/Y') }} au {{ booking.endDate | date('d/m/y') }} ({{ booking.amount }} &euro;)
+                    Du {{ booking.startDate | date('d/m/Y') }} au {{ booking.endDate | date('d/m/y') }}
+                    <br>
+                    <strong class="price-bookings mt-2 rounded"><i class="fa fa-caret-right" aria-hidden="true"></i> {{ booking.amount }} &euro;</strong>
+                    
                 </p>
-                <a href="{{ path('booking_show', {'id': booking.id}) }}" class="btn btn-info">Plus d'informations</a>
+                <a href="{{ path('booking_show', {'id': booking.id}) }}" class="btn btn-info rounded">Plus d'informations</a>
             </div>
         </div>
         <hr>

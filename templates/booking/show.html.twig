@@ -43,7 +43,7 @@
                         <dt class="col-md-4">Montant total</dt>
                         <dd class="col-md-8">{{ booking.amount }} &euro;</dd>
                         <dt class="col-md-4">Commentaire</dt>
-                        <dd class="col-md-8">{{ booking.comment }}</dd>
+                        <dd class="col-md-8">{{ booking.comment | default('Aucun commentaire laissé')}}</dd>
                     </dl>
                     <hr>
                     <h2 class="alert-heading">Votre hôte</h2>
@@ -60,7 +60,28 @@
                         </div>
                     </div>
                     {{ booking.ad.author.description | raw }}
-                    <a href="{{ path('user_show', {'id': booking.ad.author.id}) }}" class="btn btn-primary">Plus d'infos sur {{ booking.ad.author.firstName }}</a>
+                    <a href="{{ path('user_show', {'id': booking.ad.author.id}) }}" class="btn btn-primary" style="color: white !important; text-decoration: none;">Plus d'infos sur {{ booking.ad.author.firstName }}</a>
+                </div>
+                <div class="alert alert-light" id="comment">
+                    <h2 class="alert-heading">Votre avis compte !</h2>
+                    {% if date() > date(booking.endDate) %}
+                        {% set comment = booking.ad.getCommentFromAuthor(app.user) %}
+                        {% if comment is not null %}
+                            <blockquote>
+                                {{ comment.content | capitalize }}
+                            </blockquote>
+
+                            <strong>Note : </strong>{% include 'partials/rating.html.twig' with {'rating': comment.rating} %}
+                        {% else %}
+                            {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                <button type="submit" class="btn btn-success">Confirmer</button>
+                            {{ form_end(form) }}
+                        {% endif %}
+                    {% else %}
+                        <p>Vous ne pouvez pas noter cette annonce tant que votre séjour n'est pas terminé.</p>
+                    {% endif %}
+                    
                 </div>
             </div>
             <div class="col">
@@ -73,7 +94,7 @@
 
                     <br>{{ booking.ad.content | raw }}
 
-                    <br><a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}" class="btn btn-primary mt-3">Plus d'informations</a>
+                    <br><a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}" class="btn btn-primary mt-3" style="color: white !important; text-decoration: none;">Plus d'informations</a>
                 </div>
             </div>
         </div>
