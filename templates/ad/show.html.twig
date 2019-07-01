@@ -6,23 +6,25 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 mb-3">
-                <div class="jumbotron p-3">
-                    <h1>{{ ad.title | upper }}</h1>
-                    > {{ ad.rooms }} chambres pour <strong>{{ ad.formatPrice }}</strong> par nuit <br>
+                <div class="jumbotron p-3 text-center">
+                    <h1>{{ ad.title | capitalize }}</h1>
+                    <img src="{{ vich_uploader_asset(ad, 'imageFile') | imagine_filter('thumb') }}" class="img-fluid mt-2 mb-4"><br>
+                    > {{ ad.rooms }} chambre(s) pour <strong>{{ ad.price | number_format(2, ', ', ' ') }} &euro;</strong> par nuit <br>
                     <div class="mb-3"></div>
                     {% if app.user and app.user != ad.author %} 
-                        <a href="{{ path('booking_create', {'id': ad.id, 'slug': ad.slug}) }}" class="btn btn-primary mt-5">Réserver</a>
+                        <a href="{{ path('booking_create', {'id': ad.id, 'slug': ad.slug}) }}" class="btn btn-primary mt-5 rounded">Réserver</a>
                     {% endif %}
                     {% if app.user and app.user == ad.author %}                    
-                        <a href="{{ path('ads_edit', {'slug': ad.slug, 'id': ad.id}) }}" class="btn btn-primary">Modifier mon annonce</a>
-                        <form method="post" action="{{ path('ads_delete', {'slug': ad.slug, 'id': ad.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer cette annonce ?')">
+                        <a href="{{ path('ads_edit', {'id': ad.id,'slug': ad.slug}) }}" class="btn btn-primary rounded">Modifier mon annonce</a>
+                        <form method="post" action="{{ path('ads_delete', {'id': ad.id, 'slug': ad.slug}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer cette annonce ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ad.id) }}">
-                            <button class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            <button class="btn btn-danger rounded"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                         </form>
                     {% endif %}
                 </div>
-                {{ ad.content | raw }}
+                <h6><em>Description de l'annonce : </em></h6>
+                <div class="content-ad-show mb-3 mt-3">{{ ad.content | capitalize }}</div>
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         {% for image in ad.images %}
@@ -32,7 +34,7 @@
                     <div class="carousel-inner">
                         {% for image in ad.images %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="{{ vich_uploader_asset(ad, 'imageFile') | imagine_filter('medium')}}" class="d-block w-100" alt="...">
+                                <img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('carousel')}}" class="d-block w-100" alt="...">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5>{{ ad.title }}</h5>
                                     <p>{{ image.caption }}</p>
@@ -86,7 +88,7 @@
                         <img src="{{ vich_uploader_asset(a, 'imageFile') | imagine_filter('avatar') }}" alt="Avatar de {{ a.getFullName }}" class="avatar-medium">
                     </div>
                     <div class="col">
-                        <h3><a href="{{ path('user_show', {'id': a.id }) }}">{{ a.getFullName }}</a></h3>
+                        <h3><a href="{{ path('user_show', {'id': a.id }) }}">{{ a.getFullName | capitalize }}</a></h3>
                         <span class="badge badge-primary">
                             {% if a.ads | length > 1 %}
                                 {{ a.ads | length }} annonces
@@ -96,7 +98,7 @@
                         </span>
                     </div>
                 </div>
-                <br><p>{{ a.description | raw }}</p>
+                <br><p>{{ a.description | capitalize }}</p>
             </div>
         </div>
         

@@ -41,7 +41,8 @@ class BookingType extends ApplicationType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => "Si vous avez des informations à nous fournir ... (optionnel)"
+                    'placeholder' => "Si vous avez des informations à nous fournir ... (optionnel)",
+                    'class' => "ta-booking-form"
                 ]
             ])
         ;

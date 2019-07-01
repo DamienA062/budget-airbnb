@@ -8,11 +8,11 @@
 
 {% block body %}
     <div class="container">
-        <h1>Réserver le bien : {{ ad.title }}</h1>
-
+        <h2 class="mb-3 mt-5">Réserver pour l'annonce : <em>{{ ad.title }}</em></h2>
+        <div class="mb-3"><small>Vous êtes sur le point de réserver le bien de <strong>{{ ad.author.getFullName }}</strong></small></div>
         {{ form_start(form) }}
-            <div class="alert alert-light">
-                <h4>Vos dates de sejour</h4>
+            <div class="alert alert-light padding-booking-form">
+                <h6 class="mb-3"><i class="fa fa-caret-right" aria-hidden="true"></i> Vos dates de séjour</h6>
                 <div class="row">
                     <div class="col">
                         {{ form_row(form.startDate) }}
@@ -22,15 +22,17 @@
                     </div>
                 </div>
                 
-                <h4 class="mt-3">Montant du séjour : <span id="amount"></span> &euro;</h4>
-                <span id="days">0</span> nuit(s) à {{ ad.price }} la nuit
+                <h6 class="mt-3"><i class="fa fa-caret-right" aria-hidden="true"></i> Montant du séjour : <span id="amount">...</span> &euro;</h6>
+                <span id="days">0</span> nuit(s) à {{ ad.price | number_format(2, ', ', ' ') }} &euro; la nuit
     
-                <h4 class="mt-4">Informations supplémentaires</h4>
+                <h6 class="mt-4 mb-3"><i class="fa fa-caret-right" aria-hidden="true"></i> Informations supplémentaires</h6>
                 {{ form_row(form.comment) }}
     
-                <button type="submit" class="btn btn-success">Je réserve</button>
-            {{ form_end(form) }}
+                
             </div>
+            <p><em><i class="fa fa-info-circle" aria-hidden="true"></i> Si vous avez terminé et êtes sûr de votre choix, vous pouvez réserver.</em></p> 
+            <button type="submit" class="btn btn-success">Je réserve</button>
+            {{ form_end(form) }}
     </div>
 {% endblock %}
 

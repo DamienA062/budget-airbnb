@@ -32,7 +32,7 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=8, max=30)
+     * @Assert\Length(min=8, max=25)
      */
     private $title;
 
@@ -56,8 +56,8 @@ class Ad
     private $updatedAt;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $coverImage;
 
@@ -70,7 +70,7 @@ class Ad
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(min=1, max=10)
+     * @Assert\Range(min=1, max=9)
      */
     private $rooms;
 
@@ -100,7 +100,6 @@ class Ad
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->coverImage = "";
         $this->bookings = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -246,7 +245,7 @@ class Ad
      * 
      * @return self
      */
-    public function setCoverImage(string $coverImage): self
+    public function setCoverImage(string $coverImage = null): self
     {
         $this->coverImage = $coverImage;
 

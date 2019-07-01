@@ -15,7 +15,7 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail:
-                    size: [348, 330]
+                    size: [348, 225]
                     position: center
                     mode: outbound
         
@@ -38,4 +38,11 @@ liip_imagine:
             filters:
                 thumbnail:
                     size: [348, 200]
+                    mode: outbound
+
+        carousel:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [730, 484]
                     mode: outbound

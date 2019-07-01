@@ -37,7 +37,7 @@
                 <p>
                     <i class="fa fa-quote-left quote-color" aria-hidden="true"></i><br>
                     <div class="col-md-3"></div>
-                    <div class="col">{{ user.description | raw }}</div>
+                    <div class="col">{{ user.description | capitalize }}</div>
                     
                 </p>
             </div>
@@ -45,7 +45,11 @@
         <div class="sep mb-3 mt-3"></div>
 
         {% if user.ads | length > 0 %}
-            <h4 class="mb-3"><i class="fa fa-caret-right" aria-hidden="true"></i> Annonces de {{ user.getFullName }} ({{ user.ads | length }})</h4>
+            {% if logged %}
+                <h4 class="mb-3"><i class="fa fa-caret-right" aria-hidden="true"></i> Vos annonces ({{ user.ads | length }})</h4>
+            {% else %}
+                <h4 class="mb-3"><i class="fa fa-caret-right" aria-hidden="true"></i> Annonces de {{ user.getFullName }} ({{ user.ads | length }})</h4>
+            {% endif %}
             <div class="row">
                 {% for ad in user.ads %}
                     {% include 'ad/_ad_listing.html.twig' %}

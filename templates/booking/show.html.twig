@@ -41,7 +41,7 @@
                         <dt class="col-md-4">Nombre de nuits</dt>
                         <dd class="col-md-8">{{ booking.duration }}</dd>
                         <dt class="col-md-4">Montant total</dt>
-                        <dd class="col-md-8">{{ booking.amount }} &euro;</dd>
+                        <dd class="col-md-8">{{ booking.amount | number_format(2, ', ', ' ')}} &euro;</dd>
                         <dt class="col-md-4">Commentaire</dt>
                         <dd class="col-md-8">{{ booking.comment | default('Aucun commentaire laissé')}}</dd>
                     </dl>
@@ -94,7 +94,7 @@
 
                     <br>{{ booking.ad.content | raw }}
 
-                    <br><a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}" class="btn btn-primary mt-3" style="color: white !important; text-decoration: none;">Plus d'informations</a>
+                    <a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}" class="btn btn-primary mt-3" style="color: white !important; text-decoration: none;">Plus d'informations</a>
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
+ * @Vich\Uploadable
  */
 class Image
 {
@@ -19,7 +20,7 @@ class Image
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $url;
 
@@ -51,7 +52,7 @@ class Image
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl(string $url = null): self
     {
         $this->url = $url;
 
@@ -99,7 +100,7 @@ class Image
      *
      * @return  self
      */ 
-    public function setImageFile(File $imageFile)
+    public function setImageFile($imageFile)
     {
         $this->imageFile = $imageFile;
 

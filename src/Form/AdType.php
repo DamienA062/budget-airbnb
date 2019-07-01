@@ -4,8 +4,8 @@ namespace App\Form;
 
 use App\Entity\Ad;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -19,13 +19,19 @@ class AdType extends ApplicationType
         $builder
             ->add('title', TextType::class, $this->getConfiguration("Titre de l'annonce"))
             ->add('price', MoneyType::class, $this->getConfiguration("Prix du bien pour la nuit"))
-            ->add('content', TextareaType::class, $this->getConfiguration("Description ..."))
-            ->add('imageFile', FileType::class, $this->getConfiguration("Parcourir ..."))
-            /*->add('images', CollectionType::class, [
+            ->add('content', TextareaType::class, [
+                'attr' => [
+                    'placeholder' => "Description détaillée de votre bien ...",
+                    'class' => "ta-ad-form"
+                ]
+            ])
+            ->add('imageFile', VichImageType::class, $this->getConfiguration("Parcourir ..."))
+            ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class, //précise de quel type sera chaque entrée
-                'allow_add' => true //précise si on a le droit d'add de nouveaux éléments
-                'allow_delete' => true //permet de supprimer des élements liés
-            ])*/
+                'allow_add' => true, //précise si on a le droit d'add de nouveaux éléments
+                'allow_delete' => true, //permet de supprimer des élements liés
+                'label' => false
+            ])
             ->add('rooms', IntegerType::class, $this->getConfiguration("Nombre de chambres"))
         ;
     }

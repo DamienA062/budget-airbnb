@@ -2,17 +2,16 @@
 
 {% block title %}Créer une annonce{% endblock %}
 
-{# form_theme (fonction qui dit à twig qu'on veut utiliser un theme particulier pour la variable form on veut utiliser le thème définit dans ce fichier (_self)) 
-{% form_theme form 'ad/_collection.html.twig' %}#}
+{# form_theme (fonction qui dit à twig qu'on veut utiliser un theme particulier pour la variable form on veut utiliser le thème définit dans ce fichier (_self)) #}
+{% form_theme form 'ad/_collection.html.twig' %}
 
 {% block body %}
 <div class="container">
-    <h1>Créer une nouvelle annonce</h1>
+    <h1 class="mt-5 mb-5">Créer une nouvelle annonce</h1>
     {{ include('ad/_form.html.twig', {form: form}) }}
 </div>
 {% endblock %}
 
-{#
 {% block javascripts %}
     <script src="/js/ad_img_form.js"></script>
-{% endblock %}#}
+{% endblock %}

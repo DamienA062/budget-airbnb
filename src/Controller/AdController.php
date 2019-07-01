@@ -74,12 +74,13 @@ class AdController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            /*foreach($ad->getImages() as $image)
+            dump($ad);
+            foreach($ad->getImages() as $image)
             {
                 $image->setAd($ad);
-
+                dump($image);
                 $this->manager->persist($image); 
-            }*/
+            }
             
 
             $this->manager->persist($ad);
@@ -101,7 +102,7 @@ class AdController extends AbstractController
      * Affiche le formulaire d'édition
      * 
      * @Route("/{slug}/{id}/edit", name="ads_edit")
-     * @Security("is_granted('ROLE_USER) and user === ad.getAuthor()", message="Vous ne pouvez pas faire faire cela.")
+     * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Vous ne pouvez pas faire faire cela.")
      *
      * @return Response
      */
@@ -113,12 +114,13 @@ class AdController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            /*foreach($ad->getImages() as $image)
+            foreach($ad->getImages() as $image)
             {
                 $image->setAd($ad);
 
                 $this->manager->persist($image); 
-            }*/
+            }
+            
             $this->addFlash('success', 'Votre annonce a bien été mise à jour');
 
             return $this->redirectToRoute('ads_show', [
@@ -160,7 +162,6 @@ class AdController extends AbstractController
      */
     public function delete(Ad $ad, Request $request)
     {
-        dump($ad);
         //On vérifie si le token est valide pour pouvoir delete (id du token, token)
         if($this->isCsrfTokenValid('delete'.$ad->getId(), $request->get('_token')))
         {

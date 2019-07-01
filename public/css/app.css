@@ -28,12 +28,15 @@ div.carousel-caption{
     background-size: cover;
     background-position: center -71px;
     margin-top: 30px;
+    position: relative;
+    background-repeat: no-repeat;
 }
 
 .inner-img-main{
     color: white;
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     padding: 33px;
+    z-index: 5;
 }
 
 .inner-link-main{
@@ -55,7 +58,7 @@ div.carousel-caption{
 
 .thumbnail-listing-parent{
     position: relative;
-    min-height: 335px;
+    min-height: 225px;
 }
 
 .thumbnail-listing{
@@ -204,7 +207,11 @@ div.carousel-caption{
     display: none !important;
 }
 
-.show-average-rating i:nth-child(n+6){
+.show-average-rating i:nth-child(n+7){
+    display: none;
+}
+
+.show-average-rating i:first-child{
     display: none;
 }
 
@@ -232,4 +239,50 @@ div.carousel-caption{
     color: white;
     padding: 9px;
     display: inline-block;
+}
+
+.signup-link{
+    margin-left: 15px;
+}
+
+.signup-link:hover{
+    text-decoration: none;
+}
+
+.ta-booking-form{
+    height: 162px !important;
+}
+
+.padding-booking-form{
+    padding: 30px !important;
+}
+
+.ta-ad-form{
+    height: 219px !important;
+}
+
+.padding-pwd-form{
+    padding-bottom: 35px !important;
+}
+
+.button-block-ad-listing{
+    position: absolute;
+    bottom: 9px;
+}
+
+.content-ad-show{
+    margin-left: 20px;
+    margin-top: 2px;
+}
+
+.img-main:after{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 40%;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 3;
 }

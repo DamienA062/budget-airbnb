@@ -3,27 +3,32 @@
 {% block title %}Locations de vacances, logements, expériences et lieux{% endblock %}
 
 {% block body %}
+    
     <div class="container">
-        <div class="img-main rounded">
+            <div class="jumbotron text-center jumbo-main">
+                <h1 class="display-3">Bievenue sur SymfonyBNB</h1>
+                <p class="lead">SymfonyBNB est une plateforme communautaire payante de location et de réservation de logements de particuliers</p>
+                <hr class="my-4">
+                <p style="font-size: 15px;">Vous êtes voyageur ? Et vous voulez voir où vous pourrez vous loger pour votre prochaine déplacement ? N'attendez plus et allez <strong>consulter les annonces</strong></p>
+                <div class="btn-home mt-5">
+                    <a href="#main-img" class="btn btn-primary rounded">Voir nos annonces</a>
+                    <a href="#best-ads" class="btn btn-primary rounded">Nos appartements les mieux notés</a>
+                    <a href="#best-owner" class="btn btn-primary rounded">Nos propriétaires stars</a>
+                </div>
+            </div>
+        <div class="img-main rounded" id="main-img">
             <div class="col-md-5 inner-img-main">
                 <p>Découvrez les aventures SymfonyBNB</p>
                 <h2>Des séjours organisés dans des lieux extraordinaires</h2>
-                <p>Logement, repas et activités compris</p>
-                <a href="#" class="inner-link-main"><strong>En savoir plus ></strong></a>
+                <p>Logements, repas et activités compris</p>
+                <a href="{{ path('ads_index') }}" class="inner-link-main"><strong>En savoir plus ></strong></a>
             </div>
         </div>
     </div>
-    {# <div class="jumbotron text-center">
-        <h1 class="display-3">Bievenue sur SymfonyBNB</h1>
-        <p class="lead">SymfonyBNB est une plateforme communautaire payante de location et de réservation de logements de particuliers</p>
-        <hr class="my-4">
-        <p>Vous êtes voyageur ? Et vous voulez voir où vous pourrez vous loger pour votre prochaine déplacement ? N'attendez plus et allez <strong>consulter les annonces</strong></p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Voir les annonces</a>
-        </p>
-    </div> #}
     <div class="container">
-        <hr class="mt-5 mb-5">
+        <hr class="mt-5 mb-4">
+        
+        <h5 class="mb-4" id="best-ads"><i class="fa fa-star" aria-hidden="true" style="color: #daa520;"></i> Nos meilleures annonces</h5>
         <div class="row">
                 <div class="col-md-4">
                         <div class="card ng-light mb-3">
@@ -74,8 +79,8 @@
                 </div>
             </div>
         </div>
-        <hr>
-        <h2 class="mb-4">Nos propriétaires stars</h2>
+        <hr class="mt-4 mb-4">
+        <h5 class="mb-4" id="best-owner"><i class="fa fa-star" aria-hidden="true" style="color: #daa520;"></i> Nos propriétaires stars</h5>
         <div class="row">
             <div class="col">
                 <div class="card border-secondary mb-3">

@@ -30,7 +30,7 @@
                     Réservation <strong>n°{{ booking.id }}</strong><br>
                     Du {{ booking.startDate | date('d/m/Y') }} au {{ booking.endDate | date('d/m/y') }}
                     <br>
-                    <strong class="price-bookings mt-2 rounded"><i class="fa fa-caret-right" aria-hidden="true"></i> {{ booking.amount }} &euro;</strong>
+                    <strong class="price-bookings mt-2 rounded"><i class="fa fa-caret-right" aria-hidden="true"></i> {{ booking.amount | number_format(2, ', ', ' ')}} &euro;</strong>
                     
                 </p>
                 <a href="{{ path('booking_show', {'id': booking.id}) }}" class="btn btn-info rounded">Plus d'informations</a>
