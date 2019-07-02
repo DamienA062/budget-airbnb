@@ -2,18 +2,41 @@
 
 {% block title %}Éditer une annonce{% endblock %}
 
-{# form_theme (fonction qui dit à twig qu'on veut utiliser un theme particulier pour la variable form on veut utiliser le thème définit dans ce fichier (_self)) 
-{% form_theme form 'ad/_collection.html.twig' %}#}
+{# form_theme (fonction qui dit à twig qu'on veut utiliser un theme particulier pour la variable form on veut utiliser le thème définit dans ce fichier (_self)) #}
+{% form_theme form 'ad/_collection.html.twig' %}
 
 {% block body %}
     <div class="container">
-        <h1>Éditer l'annonce : {{ ad.title }}</h1>
-        {{ include('ad/_form.html.twig', {form: form, button: 'Enregistrer les modifications'}) }}
+        <h1 class="mt-5 mb-5">Éditer l'annonce : <em>{{ ad.title }}</em></h1>
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-light">
+                        <h2>Informations générales</h2>
+                        <hr>
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.price) }}
+                        {{ form_row(form.rooms) }}
+                    </div>
+                    <div class="alert alert-light">
+                        <h2>Détails de l'annonce</h2>
+                        <hr>
+                        {{ form_row(form.content) }}
+                    </div>
+                    <div class="alert alert-light">
+                        <h2>Image(s) de l'annonce</h2>
+                        <hr>
+                        {% for image in images %}
+                            <img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('ad_booked_img') }}" class="mb-3">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary rounded">Enregistrer les modifications</button>
+        {{ form_end(form) }}
     </div>
 {% endblock %}
 
-{#
 {% block javascripts %}
     <script src="/js/ad_img_form.js"></script>
 {% endblock %}
-#}

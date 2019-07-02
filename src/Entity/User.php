@@ -50,7 +50,7 @@ class User implements UserInterface
     private $profilPicture;
 
     /** 
-     * @var File
+     * @var File|null
      * @Assert\Image(mimeTypes="image/jpeg", mimeTypesMessage="Format d'image ivalide, seul le jpg est accepté !")
      * @Vich\UploadableField(mapping="profilPicture_image", fileNameProperty="profilPicture")
      */
@@ -319,7 +319,7 @@ class User implements UserInterface
      *
      * @return  self
      */ 
-    public function setImageFile(File $imageFile)
+    public function setImageFile(File $imageFile = null)
     {
         $this->imageFile = $imageFile;
 

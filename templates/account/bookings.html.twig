@@ -12,7 +12,7 @@
     {% for booking in app.user.bookings %}
         <div class="row mt-5 mb-5">
             <div class="col-4">
-                <img src="" class="img-fluid" alt="Photo de l'annonce {{ booking.ad.title }}">
+                <img src="{{ vich_uploader_asset(booking.ad, 'imageFile') | imagine_filter('ad_booked_img') }}" class="img-fluid" alt="Photo de l'annonce {{ booking.ad.title }}">
                 <div class="mt-3">
                     {% set comment = booking.ad.commentFromAuthor(app.user) %}
                     {% if comment is not null %}

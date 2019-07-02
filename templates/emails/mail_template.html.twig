@@ -1,0 +1,22 @@
+<h3><em>Mail provenant de SymfonyBNB</em></h3>
+<table>
+    <tr>
+        <td><strong>Nom</strong> : </td>
+        <td>{{ contact.lastname }}</td>
+    </tr>
+    <tr>
+        <td><strong>Prénom</strong> : </td>
+        <td>{{ contact.firstname }}</td>
+    </tr>
+    <tr>
+        <td><strong>Email</strong> : </td>
+        <td>{{ contact.email }}</td>
+    </tr>
+    <tr>
+        <td><strong>Objet</strong> : </td>
+        <td>{{ contact.object | nl2br }}</td>
+    </tr>
+</table>
+<hr>
+<strong>Message</strong> : <br><br>
+{{ contact.message | nl2br }}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Form\AdType;
+use App\Form\AdEditType;
 use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -108,9 +109,11 @@ class AdController extends AbstractController
      */
     public function edit(Ad $ad, Request $request)
     {
-        $form = $this->createForm(AdType::class, $ad);
+        $form = $this->createForm(AdEditType::class, $ad);
 
         $form->handleRequest($request);
+
+        $test = $ad->getImages();
 
         if($form->isSubmitted() && $form->isValid())
         {
@@ -121,6 +124,8 @@ class AdController extends AbstractController
                 $this->manager->persist($image); 
             }
             
+            $this->manager->flush();
+
             $this->addFlash('success', 'Votre annonce a bien été mise à jour');
 
             return $this->redirectToRoute('ads_show', [
@@ -131,7 +136,8 @@ class AdController extends AbstractController
 
         return $this->render('ad/edit.html.twig', [
             'form' => $form->createView(),
-            'ad' => $ad
+            'ad' => $ad,
+            'images' => $test
         ]);
     }
 

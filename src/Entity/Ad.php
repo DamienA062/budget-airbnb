@@ -62,7 +62,7 @@ class Ad
     private $coverImage;
 
     /** 
-     * @var File
+     * @var File|null
      * @Assert\Image(mimeTypes="image/jpeg", mimeTypesMessage="Format d'image ivalide, seul le jpg est accepté !")
      * @Vich\UploadableField(mapping="ad_image", fileNameProperty="coverImage")
      */

@@ -40,13 +40,11 @@
                                 
                             </div>
                             <div class="row">
-                                    <div class="col-md-5"></div>
-                                    <div class="col-md-5">{{ form_errors(form.profilPicture) }}</div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-5 reg-label">Photo de profil&nbsp;:</div>
-                                <div class="col-md-5">{{ form_widget(form.profilPicture) }}</div>
-                            </div>    
+                                <div class="col-md-5">   
+                                        <img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('ad_booked_img') }}">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

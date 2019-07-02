@@ -47,20 +47,20 @@
                     </dl>
                     <hr>
                     <h2 class="alert-heading">Votre hôte</h2>
-
                     <div class="row mb-3">
                         <div class="col-3">
-                            {#<img src="{{ vich_uploader_asset(booking.ad.author.profilPicture, 'imageFile') | imagine_filter('medium')}}" alt="Avatar de {{ booking.ad.author }}">#}
+                            
+                            <img src="{{ vich_uploader_asset(booking.ad.author, 'imageFile') | imagine_filter('avatar')}}" alt="Avatar de {{ booking.ad.author.getFullName }}" class="rounded-circle">
                         </div>
-                        <div class="col-9">
+                        <div class="col-9 pl-5">
                             <h4>
                                 <a href="{{ path('user_show', {'id': booking.ad.author.id}) }}">{{ booking.ad.author.getFullName }}</a>
                             </h4>
                             <span class="badge badge-primary">{{ booking.ad.author.ads | length }} annonces</span>
                         </div>
                     </div>
-                    {{ booking.ad.author.description | raw }}
-                    <a href="{{ path('user_show', {'id': booking.ad.author.id}) }}" class="btn btn-primary" style="color: white !important; text-decoration: none;">Plus d'infos sur {{ booking.ad.author.firstName }}</a>
+                    {{ booking.ad.author.description | capitalize }}
+                    <br><a href="{{ path('user_show', {'id': booking.ad.author.id}) }}" class="btn btn-primary mt-3" style="color: white !important; text-decoration: none;">Plus d'infos sur {{ booking.ad.author.firstName }}</a>
                 </div>
                 <div class="alert alert-light" id="comment">
                     <h2 class="alert-heading">Votre avis compte !</h2>
@@ -92,9 +92,9 @@
                     </h4>
                     <img src="{{ vich_uploader_asset(booking.ad, 'imageFile') | imagine_filter('ad_booked_img') }}" alt="Image de {{ booking.ad.title }}" class="img-fluid mb-3">
 
-                    <br>{{ booking.ad.content | raw }}
+                    <br>{{ booking.ad.content | capitalize }}
 
-                    <a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}" class="btn btn-primary mt-3" style="color: white !important; text-decoration: none;">Plus d'informations</a>
+                    <br><a href="{{ path('ads_show', {'id': booking.ad.id, 'slug': booking.ad.slug }) }}" class="btn btn-primary mt-3" style="color: white !important; text-decoration: none;">Plus d'informations</a>
                 </div>
             </div>
         </div>
