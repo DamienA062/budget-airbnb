@@ -203,8 +203,13 @@ div.carousel-caption{
     color: #daa520;
 }
 
-.rating-ad-listing i:nth-child(n+8){
+
+.rating-ad-listing i:nth-child(n+9){
     display: none !important;
+}
+
+.rating-ad-listing i:nth-child(-n+3){
+    display: none;
 }
 
 .show-average-rating i:nth-child(n+7){
@@ -289,4 +294,13 @@ div.carousel-caption{
 
 .ta-contact-form{
     height: 155px !important;
+}
+
+.th-admin-table{
+    background-color: #1676ba;
+    color: white;
+}
+
+.row-admin-table:nth-child(even){
+    background-color: #f2f2f2;
 }

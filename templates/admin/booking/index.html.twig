@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des réservations{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <h1 class="mb-5 mt-5">Gestion des réservation</h1>
+
+    <table class="table table-hover admin-table-pd">
+        <thead class="th-admin-table">
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Réservé par</th>
+                <th>Annonce</th>
+                <th>Durée</th>
+                <th>Montant</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+                <tr class="row-admin-table">
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.createdAt | date('d/m/Y') }}</td>
+                    <td>
+                        <img src="{{ vich_uploader_asset(booking.booker, 'imageFile') | imagine_filter('home_avatar') }}" class="rounded" alt="Avatar de {{ booking.booker.getFullName }}">
+                        {{ booking.booker.getFullName | capitalize }}
+                    </td>
+                    <td>{{ booking.ad.title | capitalize }}</td>
+                    <td>{{ booking.getDuration }} jr(s)</td>
+                    <td>{{ booking.amount | number_format(2, ', ', ' ') }} &euro;</td>
+                    <td>
+                        <a href="{{ path('admin_booking_edit', {'id': booking.id}) }}" class="btn btn-info rounded">Éditer</a>
+                        <form method="post" action="{{ path('admin_booking_delete', {'id': booking.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ booking.id) }}">
+                            <button class="btn btn-danger rounded">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

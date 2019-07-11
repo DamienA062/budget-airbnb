@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des commentaires{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <h1 class="mb-5 mt-5">Gestion des commentaires</h1>
+
+    <table class="table table-hover admin-table-pd">
+        <thead class="th-admin-table">
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Auteur</th>
+                <th>Annonce</th>
+                <th>Commentaire</th>
+                <th class="text-center">Note</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+                <tr class="row-admin-table">
+                    <td>{{ comment.id | capitalize }}</td>
+                    <td>{{ comment.createdAt | date('d/m/Y') }}</td>
+                    <td>{{ comment.author.getFullName | capitalize }}</td>
+                    <td>{{ comment.ad.title | capitalize }}</td>
+                    <td>{{ comment.content | capitalize }}</td>
+                    <td>
+                        <span class="badge badge-primary">
+                            {{ comment.rating | capitalize }} <i class="fa fa-star comment-rating" aria-hidden="true"></i>
+                        </span>
+                    <td>
+                        <a href="{{ path('admin_comments_edit', {'id': comment.id}) }}" class="btn btn-info rounded mb-2">Éditer</a>
+                        <form method="post" action="{{ path('admin_comments_delete', {'id': comment.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                            <button class="btn btn-danger rounded">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+services: #clé
+  recaptcha.type: #nom du service
+    class: Damien\RecaptchaBundle\Type\RecaptchaSubmitType #classe qu'il utilise
+    tags: ['form.type'] #on précise que c'est dans les tags form.type
+    arguments: #arguments à passer
+      $key: '%recaptcha.key%' #argument contenant la clé (le param qu'on a défini dans recaptchaextension) il sera injecté auto
+  
+  recaptcha.validator:
+    class: Damien\RecaptchaBundle\Constraints\RecaptchaValidator
+    tags: ['validator.constraint_validator']
+    autowire: true
+
+  ReCaptcha\ReCaptcha:
+    class: ReCaptcha\ReCaptcha
+    arguments:
+      $secret: '%recaptcha.secret%'
+      $requestMethod: '@ReCaptcha\RequestMethod'
+    
+  ReCaptcha\RequestMethod: '@ReCaptcha\RequestMethod\CurlPost'
+  ReCaptcha\RequestMethod\CurlPost: ~

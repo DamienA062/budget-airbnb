@@ -1,7 +1,7 @@
 security:
     encoders:
         App\Entity\User:
-            algorithm: bcrypt
+            algorithm: auto
             cost: 12
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
@@ -15,6 +15,23 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        
+        #A mettre au dessus du main car quand symfony lit les firewalls, il va de haut an bas
+        admin:
+            pattern: ^/admin
+            anonymous: true
+
+            provider: in_database
+
+            form_login:
+                default_target_path: admin_ads_index
+                login_path: admin_account_login
+                check_path: admin_account_login
+
+            logout:
+                path: /logout
+                target: /
+
         main:
             anonymous: true
 
@@ -38,5 +55,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        #les gens pas co peuvent accéder à cette page
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

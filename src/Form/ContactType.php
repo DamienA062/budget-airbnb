@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Damien\RecaptchaBundle\Type\RecaptchaSubmitType;
 
 class ContactType extends AbstractType
 {
@@ -24,6 +25,12 @@ class ContactType extends AbstractType
                     'class' => "ta-contact-form"
                 ]
             ])
+            /*->add('captcha', RecaptchaSubmitType::class, [
+                'label' => 'Envoyer',
+                'attr' => [
+                    'class' => 'btn-primary rounded'
+                ]
+            ])*/
         ;
     }
 

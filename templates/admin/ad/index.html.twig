@@ -1,0 +1,54 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des annonces{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <h1 class="mb-5 mt-5">Gestion des annonces</h1>
+
+    <table class="table table-hover admin-table-pd">
+        <thead class="th-admin-table">
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th class="text-center">Réservation(s)</th>
+                <th class="text-center">Note</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ad in ads %}
+                <tr class="row-admin-table">
+                    <td>{{ ad.id | capitalize }}</td>
+                    <td>{{ ad.title | capitalize }}</td>
+                    <td>
+                        <img src="{{ vich_uploader_asset(ad.author, 'imageFile') | imagine_filter('home_avatar') }}" class="rounded" alt="Avatar de {{ ad.author.getFullName }}">
+                        {{ ad.author.getFullName }}
+                    </td>
+                    <td class="text-center">{{ ad.bookings | length }}</td>
+                    {% if ad.avgRatings == 'Pas encore noté' %}
+                        <td class="text-center" style="font-style: italic;">
+                            {{ ad.avgRatings }}
+                            {% else %}
+                        <td class="text-center">
+                            <span class="badge badge-primary">
+                                {{ ad.avgRatings | number_format(1, ',', ' ') }} <i class="fa fa-star comment-rating" aria-hidden="true"></i>     
+                            </span>
+                    {% endif %}                      
+                        </td>
+                    <td>
+                        <a href="{{ path('admin_ads_edit', {'id': ad.id, 'slug': ad.slug}) }}" class="btn btn-info rounded">Éditer</a>
+                        <form method="post" action="{{ path('admin_ads_delete', {'id': ad.id, 'slug': ad.slug}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ad.id) }}">
+                            <button class="btn btn-danger rounded">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -127,13 +127,20 @@ class Ad
     public function getAvgRatings()
     {
         $sum = 0;
-
+        
         foreach($this->comments as $comment)
         {
             $sum += $comment->getRating(); 
         }
-        $avgRating = $sum / count($this->comments->toArray());
 
+        if(count($this->comments->toArray()) == 0)
+        {
+            $avgRating = 'Pas encore noté';
+        }else{
+            $avgRating = $sum / count($this->comments->toArray());
+        }
+        
+        
         if(is_int($avgRating))
         {
             $this->type = 'int';
