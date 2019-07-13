@@ -4,11 +4,11 @@ namespace App\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\AdRepository;
 use App\Entity\Ad;
 use App\Form\AdEditType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use App\Service\Pagination;
 
 class AdminAdController extends AbstractController
 {
@@ -23,12 +23,18 @@ class AdminAdController extends AbstractController
     }
 
     /**
-     * @Route("/admin/ads", name="admin_ads_index")
+     * Utilisation du inlined requirements pour la variable page
+     * Le "?" signifie que le param est optionnel et 1 est la valeur par défaut
+     * 
+     * @Route("/admin/ads/{page<\d+>?1}", name="admin_ads_index")
      */
-    public function index(AdRepository $repo)
+    public function index($page = 1, Pagination $pagination)
     {
+        $pagination->setEntityClass(Ad::class)
+                    ->setCurrentPage($page);
+
         return $this->render('admin/ad/index.html.twig', [
-            'ads' => $repo->findAll(),
+            'pagination' => $pagination
         ]);
     }
 

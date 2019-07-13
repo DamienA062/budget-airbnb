@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for ad in ads %}
+            {% for ad in pagination.data %}
                 <tr class="row-admin-table">
                     <td>{{ ad.id | capitalize }}</td>
                     <td>{{ ad.title | capitalize }}</td>
@@ -50,5 +50,6 @@
             {% endfor %}
         </tbody>
     </table>
+    {{ pagination.render() }}
 </div>
 {% endblock %}
