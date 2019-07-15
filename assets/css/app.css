@@ -306,3 +306,59 @@ div.carousel-caption{
 .row-admin-table:nth-child(even){
     background-color: #f2f2f2;
 }
+
+.home-avatar-guest{
+    background-image: url(/img-default/guest-avatar-250x250px.png);
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    position: absolute;
+    left: -21px;
+}
+
+.home-avatar-guest-profil-edit{
+    background-image: url(/img-default/guest-avatar-250x250px.png);
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+}
+
+.home-avatar-guest-profil-show{
+    background-image: url(/img-default/guest-avatar-250x250px.png);
+    width: 128px;
+    height: 128px;
+    background-size: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-avatar-guest-ad-show{
+    background-image: url(/img-default/guest-avatar-250x250px.png);
+    width: 64px;
+    height: 64px;
+    background-size: cover;
+}
+
+.home-avatar-guest-ad-index-admin{
+    background-image: url(/img-default/guest-avatar-250x250px.png);
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    display: inline-block;
+}
+
+.jumbo-main{
+    background-color: white !important;
+}
+
+.margR{
+    margin-right: 60px !important;
+}
+
+.home-avatar-guest-homepage-show{
+    background-image: url(/img-default/guest-avatar-250x250px.png);
+    width: 128px;
+    height: 128px;
+    background-size: cover;
+}

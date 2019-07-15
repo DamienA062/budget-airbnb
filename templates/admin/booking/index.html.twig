@@ -25,7 +25,12 @@
                     <td>{{ booking.id }}</td>
                     <td>{{ booking.createdAt | date('d/m/Y') }}</td>
                     <td>
-                        <img src="{{ vich_uploader_asset(booking.booker, 'imageFile') | imagine_filter('home_avatar') }}" class="rounded" alt="Avatar de {{ booking.booker.getFullName }}">
+                        {% if booking.booker.profilPicture == null %}
+                            <div class="home-avatar-guest-ad-index-admin"></div>
+                        {% else %}
+                            <img src="{{ vich_uploader_asset(booking.booker, 'imageFile') | imagine_filter('home_avatar') }}" class="rounded" alt="Avatar de {{ booking.booker.getFullName }}">
+                        {% endif %}
+                        
                         {{ booking.booker.getFullName | capitalize }}
                     </td>
                     <td>{{ booking.ad.title | capitalize }}</td>

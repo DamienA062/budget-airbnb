@@ -24,7 +24,12 @@
                     <td>{{ ad.id | capitalize }}</td>
                     <td>{{ ad.title | capitalize }}</td>
                     <td>
-                        <img src="{{ vich_uploader_asset(ad.author, 'imageFile') | imagine_filter('home_avatar') }}" class="rounded" alt="Avatar de {{ ad.author.getFullName }}">
+                        {% if ad.author.profilPicture == null %}
+                            <div class="home-avatar-guest-ad-index-admin"></div>
+                        {% else %}
+                            <img src="{{ vich_uploader_asset(ad.author, 'imageFile') | imagine_filter('home_avatar') }}" class="rounded" alt="Avatar de {{ ad.author.getFullName }}">
+                        {% endif %}
+                        
                         {{ ad.author.getFullName }}
                     </td>
                     <td class="text-center">{{ ad.bookings | length }}</td>

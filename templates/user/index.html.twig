@@ -20,7 +20,12 @@
                         Profil de {{ user.getFullName }}
                     {% endif %}
                 </h1>
-                <img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('avatar') }}" alt="Avatar de {{ user.getFullName }}" class="avatar">
+                {% if user.profilPicture == null %}
+                    <div class="home-avatar-guest-profil-show"></div>
+                {% else %}
+                    <img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('avatar') }}" alt="Avatar de {{ user.getFullName }}" class="avatar">
+                {% endif %}            
+                
                 <br>
                 <span class="badge badge-primary mt-3">
                     {% if user.ads | length > 1 %}
