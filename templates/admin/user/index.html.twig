@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="mb-5 mt-5">Gestion des utilisateurs</h1>
+        <table class="table table-hover admin-table-pd">
+            <thead class="th-admin-table">
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Introduction</th>
+                    <th>Description</th>
+                    <th>Réservation(s)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in pagination.getData %}
+                    <tr class="row-admin-table">
+                        <td>{{ user.id | capitalize }}</td>
+                        <td>{{ user.fullName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.introduction }}</td>
+                        <td>{{ user.description }}</td>
+                        <td class="text-center">
+                            {{ user.bookings | length }}<br>
+                            <a href="{{ path('admin_user_bookings', {'id': user.id}) }}">Voir</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-info rounded mb-2">Éditer</a>
+                            <form method="post" action="{{ path('admin_user_delete', {'id': user.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr ?')">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                <button class="btn btn-danger rounded">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination.render() }}
+    </div>
+{% endblock %}

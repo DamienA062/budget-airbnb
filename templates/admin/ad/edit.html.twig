@@ -53,8 +53,8 @@
                                             <td>{{ booking.booker.getFullName }}</td>
                                             <td>{{ booking.createdAt | date('d/m/Y H:i') }}</td>
                                             <td>
-                                                <a href="" class="btn btn-primary">
-                                                    <i class="fa fa-pen"></i>
+                                                <a href="{{ path('admin_booking_edit', {'id': booking.id}) }}" class="btn btn-primary">
+                                                    <i class="fa fa-pencil"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -86,8 +86,8 @@
                                             <td>{{ comment.rating }}</td>
                                             <td>{{ comment.content }}</td>
                                             <td>
-                                                <a href="" class="btn btn-primary">
-                                                    <i class="fa fa-pen"></i>
+                                                <a href="{{ path('admin_comments_edit', {'id': comment.id}) }}" class="btn btn-primary">
+                                                    <i class="fa fa-pencil"></i>
                                                 </a>
                                             </td>
                                         </tr>

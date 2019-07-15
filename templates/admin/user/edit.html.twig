@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Édition du profil utilisateur n°{{ user.id }} - {{ user.fullName }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5 mb-5">Éditer le profil de {{ user.fullName }}</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="rounded btn btn-primary">Enregistrer les modifications</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
